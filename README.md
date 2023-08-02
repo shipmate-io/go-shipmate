@@ -1,5 +1,7 @@
 # Interact with Shipmate from your Go code
 
+![](https://github.com/shipmate-io/go-shipmate/blob/master/assets/shipmate_x_go_illustration.webp)
+
 ## Installation
 
 You can install the module by running the following command in your terminal:
