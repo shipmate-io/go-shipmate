@@ -1,4 +1,4 @@
-module go-shipmate
+module github.com/shipmate-io/go-shipmate
 
 go 1.20
 
