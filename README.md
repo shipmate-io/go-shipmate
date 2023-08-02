@@ -37,6 +37,8 @@ message := shipmate.Message{
 }
 
 messageQueue.PublishMessage(&message)
+
+messageQueue.Close()
 ```
 
 Handle a message:
