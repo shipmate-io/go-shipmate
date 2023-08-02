@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 )
 
 type requestPayloadType struct {
@@ -48,13 +49,17 @@ func NewMessageQueue(name string) (*MessageQueue, error) {
 func ParseMessage(requestPayload []byte) (*Message, error) {
 	var parsedRequestPayload requestPayloadType
 
-	err := json.Unmarshal(requestPayload, &parsedRequestPayload)
+	jsonParseError := json.Unmarshal(requestPayload, &parsedRequestPayload)
 
-	if err != nil {
-		return nil, err
+	if jsonParseError != nil {
+		return nil, errors.New("unable to parse message")
 	}
 
-	payload, _ := base64.StdEncoding.DecodeString(parsedRequestPayload.Message.Data)
+	payload, base64DecodeError := base64.StdEncoding.DecodeString(parsedRequestPayload.Message.Data)
+
+	if base64DecodeError != nil {
+		return nil, errors.New("unable to parse message")
+	}
 
 	message := Message{
 		Type:    parsedRequestPayload.Message.Attributes["type"],
